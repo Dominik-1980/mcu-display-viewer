@@ -1,50 +1,102 @@
 # MCU Display Viewer
 
-Native macOS-Anzeige und MIDI-Bridge für acht MCU-Scribble-Strips. Die App stellt den virtuellen CoreMIDI-Eingang `MCU Display Bridge` bereit, zeigt Logics Display- und Farbdaten an und leitet den gesamten MIDI-Strom an einen wählbaren Ausgang weiter. 
+**Acht MCU-Displayfelder für Logic Pro**
 
-## Starten
+[![Auf Ko-fi unterstützen](https://img.shields.io/badge/Ko--fi-Unterst%C3%BCtzen-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/dominik_w)
+[![Mit PayPal unterstützen](https://img.shields.io/badge/PayPal-Unterst%C3%BCtzen-003087?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/DominikWeiland)
 
-Im Menü `MIDI → Ausgangsgerät` den physischen MIDI-Ausgang des Controllers wählen. Die Auswahl wird gespeichert und nach einem Gerätewechsel erneut gesucht. Die Bridge ist nur vorhanden, solange die App läuft; deshalb die App vor Logic öffnen.
+MCU Display Viewer ist eine native macOS-App für acht MCU-Displayfelder.
+Sie zeigt Namen, Werte und Logic-Farben an.
+Die integrierte CoreMIDI-Bridge empfängt Logics MCU-Daten und leitet sie an
+einen wählbaren physischen MIDI-Ausgang weiter.
 
-In Logic Pro unter `Bedienoberflächen → Setup` bei der **vorhandenen** Mackie-Control-Instanz den Eingang des physischen Controllers beibehalten und als Ausgang `MCU Display Bridge` wählen. Keine zweite Mackie-Control-Instanz anlegen.
+## Schnellstart
 
-CoreMIDI liefert nur neue Nachrichten. Wird die App nach Logic geöffnet, kann sie zunächst leere Felder zeigen, bis Logic die Display-Daten erneut sendet. Ein Spurwechsel oder erneutes Öffnen des Logic-Projekts kann die Anzeige aktualisieren.
+1. Lade die [DMG-Datei von GitHub Releases](https://github.com/Dominik-1980/mcu-display-viewer/releases/latest)
+   herunter und öffne sie. Ziehe `MCU Display Viewer.app` auf die
+   Verknüpfung **Programme**.
+2. Verbinde deinen Controller und öffne die App **vor Logic Pro**. Wähle
+   unter **MIDI → Ausgangsgerät** den physischen MIDI-Ausgang des Controllers.
+3. Öffne in Logic Pro **Bedienoberflächen → Setup**. Behalte bei der
+   **vorhandenen** Mackie-Control-Instanz den physischen Controller als Eingang
+   bei und wähle `MCU Display Bridge` als Ausgang. Lege keine zweite
+   Mackie-Control-Instanz an.
+4. Wechsle in Logic eine Spur und prüfe die acht Felder sowie die Statuszeile
+   der App. Der Controller sollte weiterhin auf Logic reagieren.
 
-## Bedienung
+Die Bridge ist nur verfügbar, solange die App läuft. CoreMIDI liefert
+Display-Daten erst bei neuen Nachrichten. Wenn die Felder nach dem Start leer
+bleiben, wechsle in Logic eine Spur oder öffne das Projekt erneut.
 
-- Das Fenster ist frei skalierbar. Die acht Felder ordnen sich je nach Breite in acht, vier, zwei oder einer Spalte an.
-- Kanäle ohne Namen und Wert bleiben als dunkle, nummerierte Felder sichtbar. Sobald Daten eintreffen, zeigt das Feld wieder seine Logic-Farbe.
-- `Ansicht → Immer im Vordergrund` schaltet die schwebende Fensterebene um. Der Zustand bleibt gespeichert.
-- `MIDI → Ausgangsgerät` zeigt verfügbare MIDI-Ziele. Der Controller-Ausgang ist frei wählbar; die Einstellung gilt auch nach einem Neustart. `MIDI → Logic einrichten …` zeigt die nötige Logic-Zuordnung.
-- Fenstergröße und Position werden beim Schließen gespeichert.
-- Die Statuszeile zeigt, ob die Bridge bereit ist, welcher Ausgang gewählt wurde und ob MIDI-Daten empfangen wurden. Bei einem Portwechsel sucht die App den gespeicherten Ausgang erneut.
+## Was die App kann
 
+| Bereich | Funktionen |
+| --- | --- |
+| Display | Namen, Werte und Logic-Farben für acht MCU-Kanäle anzeigen |
+| MIDI-Bridge | Logics MCU-Daten an einen wählbaren Controller-Ausgang weiterleiten |
+| Fenster | Acht Felder je nach Breite in 8, 4, 2 oder 1 Spalte anordnen |
+| Ansicht | Leere Kanäle dezent anzeigen und das Fenster optional im Vordergrund halten |
+| Einstellungen | MIDI-Ausgang sowie Fenstergröße und -position speichern |
+| Status | Bridge, gewählten Ausgang und empfangene MIDI-Daten anzeigen |
 
-## Bauen
+Unter **MIDI → Logic einrichten …** zeigt die App die nötige Zuordnung
+noch einmal an. Nach einem MIDI-Gerätewechsel sucht sie den gespeicherten
+Ausgang erneut.
 
-`MCUDisplayViewer.xcodeproj` in Xcode öffnen und das Schema `MCU Display Viewer` für `My Mac` bauen. Das Xcode-Projekt und Swift Package Manager verwenden dieselben Swift-Quelldateien.
+## Voraussetzungen und erster Start
 
-Alternativ lokal:
+Der Download enthält eine App für **Apple Silicon ab macOS 13**. Für den
+beschriebenen Signalweg benötigst du Logic Pro und einen physischen
+MCU-kompatiblen Controller.
 
-```sh
-./scripts/build-app.sh
-```
+Version 1.0.0 ist lokal signiert, aber noch nicht mit einer Apple Developer ID
+signiert oder von Apple notarisiert. macOS kann den ersten Start deshalb
+blockieren. Wenn du den Download aus dem offiziellen Repository geprüft hast,
+versuche die App einmal zu öffnen und wähle dann unter **Systemeinstellungen →
+Datenschutz & Sicherheit → Dennoch öffnen**. Siehe dazu
+[Apples Anleitung zum sicheren Öffnen von Apps](https://support.apple.com/de-de/102445).
+Die [SHA-256-Prüfsumme](https://github.com/Dominik-1980/mcu-display-viewer/releases/latest)
+liegt beim Download als `SHA256SUMS` bei.
 
-Das Skript erstellt eine ad-hoc signierte App unter `build/`. Für Parser-Tests:
+## Versionierung
+
+`1.0.x` steht für Fehlerkorrekturen, `1.x.0` für neue Funktionen und
+`x.0.0` für größere Versionssprünge mit Änderungen an Bedienung oder
+Zuordnungen.
+
+## Lizenz
+
+Copyright © 2026 Dominik Weiland. MCU Display Viewer wird unter der
+**GNU General Public License Version 3 (GPL-3.0-only)** veröffentlicht.
+Den vollständigen Lizenztext findest du in [LICENSE](LICENSE).
+Der Quellcode ist in diesem GitHub-Repository verfügbar.
+
+## Entwicklung unterstützen
+
+Wenn dir MCU Display Viewer hilft, kannst du die Entwicklung freiwillig über
+[Ko-fi](https://ko-fi.com/dominik_w) oder
+[PayPal](https://paypal.me/DominikWeiland) unterstützen.
+Im App-Menü findest du außerdem **Über MCU Display Viewer** sowie direkte
+Links zu beiden Seiten.
+
+## Für Entwickler
+
+Das native Xcode-Projekt ist `MCUDisplayViewer.xcodeproj` mit dem Scheme
+`MCU Display Viewer` und Ziel **My Mac**. Das Swift-Package verwendet dieselben
+Quellen und enthält Parser-Tests:
 
 ```sh
 xcrun swift test --disable-sandbox --scratch-path /tmp/mcu-display-build --cache-path /tmp/mcu-display-spm-cache --manifest-cache local
+./scripts/build-app.sh
+./scripts/package-dmg.sh
 ```
 
-## Release-DMG
+Der Skript-Build legt `build/MCU Display Viewer.app` ab. Das Paket-Skript
+erstellt unter `dist/` eine DMG mit App, Programme-Verknüpfung, README und
+Lizenz sowie die Datei `SHA256SUMS`.
 
-Nach `./scripts/build-app.sh` erstellt `./scripts/package-dmg.sh` ein DMG und eine Prüfsummendatei unter `dist/`. Das DMG enthält die App, einen Link zum Programme-Ordner, diese Anleitung und die Lizenz. Die App ist für Apple Silicon ab macOS 13 gebaut.
-
-Der Build ist ad-hoc signiert und nicht durch Apple notarisiert. macOS kann deshalb das erste Öffnen blockieren. Prüfe vor dem Öffnen die SHA-256-Prüfsumme und verwende bei Bedarf **Systemeinstellungen → Datenschutz & Sicherheit → Dennoch öffnen**. [Apple erklärt diesen Schritt](https://support.apple.com/102445). Für eine reguläre Verteilung ohne diese Hürde wäre eine Developer-ID-Signatur mit Notarisierung nötig.
-
-Der Quellcode steht unter **GPL-3.0-only**; der vollständige Lizenztext liegt in [LICENSE](LICENSE).
-
-## Empfangene Nachrichten
-
-- MCU-Display-Text: `F0 00 00 66 14 12 <Position> <Text> F7` — Teilupdates werden in einem 112-Zeichen-Puffer zusammengesetzt.
-- X-Touch-Farben: `F0 00 00 66 14 72 <8 Farben> F7` — Codes 0 bis 7 für aus, Rot, Grün, Gelb, Blau, Violett, Cyan, Weiß.
+Die App setzt MCU-Display-Teilupdates
+(`F0 00 00 66 14 12 <Position> <Text> F7`) in einem
+112-Zeichen-Puffer zusammen. Die acht Farbcodes kommen als
+`F0 00 00 66 14 72 <8 Farben> F7`; Werte von 0 bis 7 stehen für
+aus, Rot, Grün, Gelb, Blau, Violett, Cyan und Weiß.
