@@ -6,7 +6,7 @@ Native macOS-Anzeige und MIDI-Bridge für acht MCU-Scribble-Strips. Die App stel
 
 Im Menü `MIDI → Ausgangsgerät` den physischen MIDI-Ausgang des Controllers wählen. Die Auswahl wird gespeichert und nach einem Gerätewechsel erneut gesucht. Die Bridge ist nur vorhanden, solange die App läuft; deshalb die App vor Logic öffnen.
 
-In Logic Pro unter `Bedienoberflächen → Setup` bei der **vorhandenen** Mackie-Control-Instanz den Eingang des physischen Controllers beibehalten und als Ausgang `MCU Display Bridge` wählen. Keine zweite Mackie-Control-Instanz anlegen. Nach der Umstellung kann MidiPipe geschlossen werden.
+In Logic Pro unter `Bedienoberflächen → Setup` bei der **vorhandenen** Mackie-Control-Instanz den Eingang des physischen Controllers beibehalten und als Ausgang `MCU Display Bridge` wählen. Keine zweite Mackie-Control-Instanz anlegen.
 
 CoreMIDI liefert nur neue Nachrichten. Wird die App nach Logic geöffnet, kann sie zunächst leere Felder zeigen, bis Logic die Display-Daten erneut sendet. Ein Spurwechsel oder erneutes Öffnen des Logic-Projekts kann die Anzeige aktualisieren.
 
